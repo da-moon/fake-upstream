@@ -6,20 +6,24 @@ POETRY := PIP_USER=false python3 $(HOME)/.poetry/bin/poetry
 .SILENT: python-init
 python-init:
 	- $(call print_running_target)
-	- $(eval command=pushd cmd/upstream)
-	- $(eval command=${command} && ${POETRY} run python3 -m pip install --upgrade pip)
+	- $(eval command=${POETRY} run python3 -m pip install --upgrade pip)
 	- $(eval command=${command} && ${POETRY} update)
-	- $(eval command=${command} && popd)
 	- @$(MAKE) --no-print-directory -f $(THIS_FILE) shell cmd="${command}"
 	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-clean
 	- $(call print_completed_target)
-
-.PHONY:  python-run-server
-.SILENT: python-run-server
-python-run-server:
+.PHONY:  python-server
+.SILENT: python-server
+python-kill-server:
+	- $(call print_running_target)
+	- $(eval command=fuser -n tcp -k ${UPSTREAM_PORT})
+	- @$(MAKE) --no-print-directory -f $(THIS_FILE) shell cmd="${command}"
+	- $(call print_completed_target)
+	
+.PHONY:  python-server
+.SILENT: python-server
+python-server: python-kill-server
 	- $(call print_running_target)
 	- $(eval command=$(MKDIR) logs )
-	- $(eval command=${command} && pushd cmd/upstream)
 	- $(eval command=${command} && ${POETRY} run cli)
 ifneq (${LOG_LEVEL}, )
 	- $(eval command=${command} --log ${LOG_LEVEL})
@@ -28,14 +32,22 @@ endif
 ifneq (${UPSTREAM_PORT}, )
 	- $(eval command=${command} --port ${UPSTREAM_PORT})
 endif
-	- $(eval command=${command} > $(PWD)/logs/upstream-server.log 2>&1 )
-	- $(eval command=${command} && popd &)
+	- $(eval command=${command} > $(PWD)/logs/upstream-server.log 2>&1 &)
 	- @$(MAKE) --no-print-directory -f $(THIS_FILE) shell cmd="${command}"
 	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-clean
 	- $(call print_completed_target)
 .PHONY:  python-clean
 .SILENT: python-clean
 python-clean:
+	- $(call print_running_target)
+	- $(eval command=find $(PWD) -type d -name '__pycache__' | xargs -I {} rm -rf {})
+	- @$(MAKE) --no-print-directory -f $(THIS_FILE) shell cmd="${command}"
+
+	- $(call print_completed_target)
+
+.PHONY:  python-clean-1
+.SILENT: python-clean-1
+python-clean-1:
 	- $(call print_running_target)
 	- $(call print_running_target, removing egg-info directories)
 	- $(RM) $(PWD)/*.egg-info
@@ -61,7 +73,8 @@ python:
 	- $(call print_running_target)
 	- $(call print_running_target,listing targets defined in contrib/makefiles/targets/python/python.mk ...)
 	- $(call print_running_target,++ make python-init)
-	- $(call print_running_target,++ make python-run-server)
+	- $(call print_running_target,++ make python-server)
+	- $(call print_running_target,++ make python-kill-server)
 	- $(call print_running_target,++ make python-clean)
 ifneq ($(DELAY),)
 	- sleep $(DELAY)

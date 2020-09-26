@@ -1,0 +1,66 @@
+[tool.poetry]
+name = "upstream"
+version = "0.1.0"
+description = "simple web server to be used as upstream for experimenting with load balancer traffic"
+authors = ["da-moon <damoon.azarpazhooh@ryerson.ca>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+apispec = "^3.3.2"
+certifi = "^2020.6.20"
+chardet = "^3.0.4"
+Click = "^7.1.2"
+docopt = "^0.6.2"
+flasgger = "^0.9.5"
+Flask = "^1.1.2"
+gunicorn = "^20.0.4"
+idna = "^2.10"
+itsdangerous = "^1.1.0"
+Jinja2 = "^2.11.2"
+jsonschema = "^3.2.0"
+MarkupSafe = "^1.1.1"
+marshmallow = "^3.8.0"
+mistune = "^0.8.4"
+pbr = "^5.5.0"
+python-dateutil = "^2.8.1"
+pytz = "^2020.1"
+PyYAML = "^5.3.1"
+requests = "^2.24.0"
+six = "^1.15.0"
+urllib3 = "^1.25.10"
+Werkzeug = "^1.0.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+apispec = "^3.3.2"
+certifi = "^2020.6.20"
+chardet = "^3.0.4"
+Click = "^7.1.2"
+docopt = "^0.6.2"
+flasgger = "^0.9.5"
+Flask = "^1.1.2"
+gunicorn = "^20.0.4"
+idna = "^2.10"
+itsdangerous = "^1.1.0"
+Jinja2 = "^2.11.2"
+jsonschema = "^3.2.0"
+MarkupSafe = "^1.1.1"
+marshmallow = "^3.8.0"
+mistune = "^0.8.4"
+pbr = "^5.5.0"
+python-dateutil = "^2.8.1"
+pytz = "^2020.1"
+PyYAML = "^5.3.1"
+requests = "^2.24.0"
+six = "^1.15.0"
+urllib3 = "^1.25.10"
+Werkzeug = "^1.0.1"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
+[tool.poetry.scripts]
+cli = "main:main"
+
