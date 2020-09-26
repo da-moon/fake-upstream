@@ -1,7 +1,14 @@
 #build/exec env setting
 DOCKER_ENV:=false
 DELAY:=
-# variables for python
-LOG_LEVEL=DEBUG
-UPSTREAM_PORT=5000
-UPSTREAM_IP=0.0.0.0
+# variables for server
+LOG_LEVEL:=TRACE
+UPSTREAM_PORT:=6000
+UPSTREAM_IP:=0.0.0.0
+# only 'true' or 'false' values are accepted
+DEBUG:=true
+# only 'true' or 'false' values are accepted
+RELOADER:=false
+# redirects stdout and stderr of server to  logs/upstream-server.log
+# only 'true' or 'false' values are accepted
+SERVER_FILE_REDIRECT:=false

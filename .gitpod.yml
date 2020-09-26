@@ -1,5 +1,20 @@
 # https://github.com/da-moon/container-images
 image: fjolsvin/gitpod-fake-upstream
+tasks:
+  - command: >
+      make init;
+ports:
+  - port: 3000-10000
+    onOpen: ignore
+github:
+  prebuilds:
+    master: true
+    branches: true
+    pullRequests: true
+    pullRequestsFromForks: true
+    addComment: true
+    addBadge: true
+
 vscode:
   extensions:
     - wmaurer.change-case@1.0.0:EFbL568cjs07Ajw2vuXcpw==

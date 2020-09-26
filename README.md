@@ -10,3 +10,12 @@
 </p>
 
 A simple flask based upstream server and client utility, used for mocking servers behind load-balancer and probing reverse proxy configuration.
+
+## TODO
+
+- [ ] Load individual module
+- [ ] Load module directory
+
+## references
+
+- [`flasgger`](https://github.com/flasgger/flasgger) examples

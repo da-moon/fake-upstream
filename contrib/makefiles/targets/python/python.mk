@@ -1,7 +1,7 @@
 
 THIS_FILE := $(lastword $(MAKEFILE_LIST))
 SELF_DIR := $(dir $(THIS_FILE))
-POETRY := PIP_USER=false python3 $(HOME)/.poetry/bin/poetry
+POETRY := python3 $(HOME)/.poetry/bin/poetry
 .PHONY:  python-init
 .SILENT: python-init
 python-init:
@@ -22,8 +22,13 @@ python-kill-server:
 .SILENT: python-server
 python-server: python-kill-server
 	- $(call print_running_target)
-	- $(eval command=$(MKDIR) logs )
-	- $(eval command=${command} && ${POETRY} run cli)
+	- $(eval command=)
+ifneq (${SERVER_FILE_REDIRECT}, )
+ifeq (${SERVER_FILE_REDIRECT} , true)
+	- $(eval command=${command}$(MKDIR) logs && )
+endif
+endif
+	- $(eval command=${command}${POETRY} run cli)
 ifneq (${LOG_LEVEL}, )
 	- $(eval command=${command} --log ${LOG_LEVEL})
 endif
@@ -34,9 +39,22 @@ endif
 ifneq (${UPSTREAM_IP}, )
 	- $(eval command=${command} --host ${UPSTREAM_IP})
 endif
+ifneq (${DEBUG}, )
+ifeq (${DEBUG} , true)
+	- $(eval command=${command} --debug)
+endif
+endif
+ifneq (${RELOADER}, )
+ifeq (${RELOADER} , true)
+	- $(eval command=${command} --reloader)
+endif
+endif
+ifneq (${SERVER_FILE_REDIRECT}, )
+ifeq (${SERVER_FILE_REDIRECT} , true)
 	- $(eval command=${command} > $(PWD)/logs/upstream-server.log 2>&1 &)
+endif
+endif
 	- @$(MAKE) --no-print-directory -f $(THIS_FILE) shell cmd="${command}"
-	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-clean
 	- $(call print_completed_target)
 .PHONY:  python-clean
 .SILENT: python-clean
