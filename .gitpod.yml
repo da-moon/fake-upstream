@@ -1,0 +1,18 @@
+# https://github.com/da-moon/container-images
+image: fjolsvin/gitpod-fake-upstream
+vscode:
+  extensions:
+    - wmaurer.change-case@1.0.0:EFbL568cjs07Ajw2vuXcpw==
+    - emeraldwalk.RunOnSave@0.2.0:6DpPyy2kCQ1Ug+O4phQ/Lw==
+    - vscode-snippet.snippet@0.8.0:heDB4eLEEI1w13OjYacLlQ==
+    - bungcip.better-toml@0.3.2:3QfgGxxYtGHfJKQU7H0nEw==
+    - micnil.vscode-checkpoints@1.3.0:dkiLAf0Y/WfLURngDOsDdA==
+    - streetsidesoftware.code-spell-checker@1.7.17:k6J87NQRojNS1DjwmZSSLg==
+    - zalo.symplex@0.0.8:ZftGU13OMy/bJDv4reqVWg==
+    - yixian.yapep@0.0.3:lvaXr74ecbxL0wWVvKSIwQ==
+    - mechatroner.rainbow-csv@1.6.0:DhpIHvreIpKctFgf/xuPKA==
+    - phplasma.csv-to-table@1.2.3:DjOuY3B8MlMexvjg9kIIHQ==
+    - aaron-bond.better-comments@2.0.5:YKNfOclR4e8XAxlj4xp2AA==
+    - wayou.vscode-todo-highlight@1.0.4:8IqxuxCVol2WnScJc5xVzg==
+    - redhat.vscode-yaml@0.7.2:bHhi0sG8mPlN+HpfBDsjQw==
+    - ms-python.python@2020.3.71113:Pe7clI4/hPXqxiJrRXl+kw==
