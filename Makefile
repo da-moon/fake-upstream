@@ -15,6 +15,13 @@ init:
 	- $(call print_running_target)
 	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-init
 	- $(call print_completed_target)
+	
+.PHONY: kill
+.SILENT: kill
+kill:
+	- $(call print_running_target)
+	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-kill-server
+	- $(call print_completed_target)
 .PHONY: server 
 .SILENT: server
 server: python-server

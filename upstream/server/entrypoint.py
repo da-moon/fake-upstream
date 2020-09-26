@@ -17,19 +17,6 @@ from .config import SWAGGER_CONFIG
 LOGGER = logging.getLogger(__name__)
 
 
-@lru_cache(maxsize=1)
-def tos():
-    # license = \
-    # pkg_resources.resource_string(__name__, '../LICENSE')
-    license = os.path.abspath('../LICENSE')
-    return Response(license, mimetype='text/plain')
-
-
-def create_endpoints(flask_app: Flask) -> None:
-    LOGGER.info("Creating API Endpoints")
-    flask_app.add_url_rule('/', 'index', lambda: redirect('apidocs'))
-    flask_app.add_url_rule('/tos', 'tos', tos)
-
 
 def __server_cli_entrypoint__(args):
     """
@@ -43,22 +30,20 @@ def __server_cli_entrypoint__(args):
         LOOGER.error(
             "parsed 'port' value ('{}') cannot be converted to int.".format(port))
         sys.exit(-1)
+    host = args.get('host_flag', "127.0.0.1")
 
     LOGGER.debug(
         f"__server_cli_entrypoint__() - parsed arguments : "
+        f"host={host} "
         f"port={port} ")
     try:
-        server = Server(port)
-        server.run
+        server = Server(host, port)
+        server.run()
+
     except Exception as e:
         # handling exception
         LOGGER.error("cannot start server to error : {}".format(e))
         sys.exit(-1)
-    flask_app = Flask(__name__)
-    flask_app.config['SWAGGER'] = SWAGGER_CONFIG
-    Swagger(flask_app)
-    create_endpoints(flask_app)
-    flask_app.run()
 
 
 def configure_parser(sub_parsers):
@@ -80,6 +65,15 @@ def configure_parser(sub_parsers):
         default=9090,
         dest='port_flag',
         help='Default port the server binds to.(default: 9090)',
+    )
+
+    # setting server subcommand flags
+    server_parser.add_argument(
+        '--host',
+        type=str,
+        default="127.0.0.1",
+        dest='host_flag',
+        help='Default ip address the server binds to.(default: 127.0.0.1)',
     )
     # setting function to execute once 'server' subcommand is called
     server_parser.set_defaults(func=__server_cli_entrypoint__)
