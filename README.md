@@ -1,4 +1,4 @@
-# fake-upstream
+# upstream-gen
 
 <p align="center">
   <a href="https://gitpod.io#https://github.com/da-moon/fake-upstream">
