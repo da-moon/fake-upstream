@@ -1,7 +1,13 @@
 FROM gitpod/workspace-full
 USER gitpod
 SHELL ["/bin/bash", "-c"]
-ENV PIP_USER=false
+ENV PIP_USER=false'
+# installing nuitka for static compilation of python apps + some extra tools
+RUN export DEBIAN_FRONTEND=noninteractive; \
+    wget -O - http://nuitka.net/deb/archive.key.gpg | sudo apt-key add - && \
+    echo "deb http://nuitka.net/deb/stable/$(lsb_release -c -s) $(lsb_release -c -s) main" | sudo tee /etc/apt/sources.list.d/nuitka.list && \ 
+    sudo apt-get update && \ 
+    sudo apt-get -y install nuitka upx
 # uninstalling cargo since it takes too much space
 RUN yes | /home/gitpod/.cargo/bin/rustup self uninstall && \
     sudo rm /home/gitpod/.bashrc.d/80-rust
