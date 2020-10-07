@@ -2,17 +2,12 @@
 from upstream_gen import __version__
 from upstream_gen.util.log import *
 from upstream_gen.util.cli import *
-# from upstream_gen.server.server import Server
-from flasgger import Swagger
 from flask import Flask, render_template
 from werkzeug.serving import run_simple
 try:
     from werkzeug.middleware.dispatcher import DispatcherMiddleware
 except ImportError:
     from werkzeug.wsgi import DispatcherMiddleware
-
-from functools import lru_cache
-import os
 import logging
 import sys
 from collections import OrderedDict
