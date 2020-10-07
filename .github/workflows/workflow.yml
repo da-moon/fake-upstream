@@ -1,0 +1,36 @@
+name: "push to registry"
+on:
+  push:
+    tags:
+      - "*"
+jobs:
+  push_to_registry:
+    name: Push Docker image to GitHub Packages
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: build and tag the image
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          docker build \
+          --build-arg "GITHUB_REPOSITORY=$GITHUB_REPOSITORY" \
+          --build-arg "GITHUB_REPOSITORY_OWNER=$GITHUB_REPOSITORY_OWNER" \
+          --build-arg "GITHUB_ACTOR=$GITHUB_ACTOR" \
+          --build-arg "GITHUB_TOKEN=$GITHUB_TOKEN" \
+          -t "docker.pkg.github.com/$GITHUB_REPOSITORY/upstream-gen:latest" ./contrib/docker
+
+      - name: confirming successful build of image
+        shell: bash
+        run: |
+          docker run --rm "docker.pkg.github.com/$GITHUB_REPOSITORY/upstream-gen:latest" version
+      - name: authenticate docker
+        shell: bash
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u "${{ github.actor }}" --password-stdin
+      - name: push to github packages
+        shell: bash
+        run: |
+          docker push "docker.pkg.github.com/$GITHUB_REPOSITORY/upstream-gen:latest"
