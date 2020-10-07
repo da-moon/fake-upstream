@@ -1,7 +1,7 @@
 FROM gitpod/workspace-full
 USER gitpod
 SHELL ["/bin/bash", "-c"]
-ENV PIP_USER=false
+ENV 
 # installing nuitka for static compilation of python apps + some extra tools
 RUN export DEBIAN_FRONTEND=noninteractive; \
     wget -O - http://nuitka.net/deb/archive.key.gpg | sudo apt-key add - && \
@@ -17,6 +17,7 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
     rm -rf "/home/gitpod/.local" && \
     mkdir -p "/home/gitpod/.local/bin" && \
     echo 'export PATH="$PATH:/home/gitpod/.poetry/bin"' >> "/home/gitpod/.bashrc" && \
+    echo 'export PIP_USER=false' >> "/home/gitpod/.bashrc" && \
     echo 'alias poetry="python3 /home/gitpod/.poetry/bin/poetry"' >> "/home/gitpod/.bash_aliases" 
 ENV PATH="$PATH:/home/gitpod/.local/bin:/home/gitpod/.poetry/bin"
 # installing poetry. poetry is a python dependancy management software
