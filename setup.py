@@ -21,7 +21,7 @@ setup(
     author_email='damoon.azarpazhooh@ryerson.ca',
     license='MIT',
     entry_points={"console_scripts": ["upstream-gen = main:main"]},
-    packages=['upstream_gen', 'upstream_gen.defaults'],
+    packages=['upstream_gen', '.defaults'],
     package_dir={"": "."},
     package_data={"upstream_gen": ["server/templates/*.html"]},
     install_requires=[

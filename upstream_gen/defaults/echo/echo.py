@@ -11,7 +11,7 @@ from flask import request
 from flask.views import MethodView
 
 from flasgger import Swagger
-from upstream_gen.defaults.echo.config import SWAGGER_CONFIG
+from .config import SWAGGER_CONFIG
 
 LOGGER = logging.getLogger(__name__)
 cli = sys.modules['flask.cli']
@@ -49,7 +49,6 @@ class BaseAPIView(MethodView):
 
 class ModelAPIView(BaseAPIView):
     """Model api view"""
-
 
 
 class echoView(ModelAPIView):
@@ -107,7 +106,7 @@ class echoView(ModelAPIView):
     def get(self, endpoint):
         """
         it just returns back the payload as json
-				---
+                                ---
         tags:
           - echo
         parameters:
@@ -146,7 +145,7 @@ class echoView(ModelAPIView):
     def put(self, endpoint):
         """
         it just returns back the payload as json
-				---
+                                ---
         tags:
           - echo
         parameters:
@@ -185,7 +184,7 @@ class echoView(ModelAPIView):
     def head(self, endpoint):
         """
         it just returns back the payload as json
-				---
+                                ---
         tags:
           - echo
         parameters:
@@ -224,7 +223,7 @@ class echoView(ModelAPIView):
     def delete(self, endpoint):
         """
         it just returns back the payload as json
-				---
+                                ---
         tags:
           - echo
         parameters:
@@ -263,7 +262,7 @@ class echoView(ModelAPIView):
     def patch(self, endpoint):
         """
         it just returns back the payload as json
-				---
+                                ---
         tags:
           - echo
         parameters:
@@ -302,7 +301,7 @@ class echoView(ModelAPIView):
     def options(self, endpoint):
         """
         it just returns back the payload as json
-				---
+                                ---
         tags:
           - echo
         parameters:
@@ -336,6 +335,7 @@ class echoView(ModelAPIView):
             'body': request.data.decode("utf-8")
         }
         return jsonify(result)
+
 
 app.add_url_rule(
     '/<path:endpoint>',
