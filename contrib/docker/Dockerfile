@@ -1,4 +1,3 @@
-# multistage build for bifrost
 # eg. build command
 # docker build \
 #        --build-arg GITHUB_REPOSITORY=$GITHUB_REPOSITORY \
@@ -26,24 +25,19 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositorie
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
     apk upgrade -U -a && \
-    apk add build-base make git bash ncurses curl
+    apk add build-base make git bash ncurses curl libressl-dev musl-dev libffi-dev
+SHELL ["/bin/bash", "-c"]
 RUN mkdir -p "/workspace" && \
     mkdir -p "~/.local/bin" && \
-    mkdir -p "~/.poetry/bin"
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python
+    mkdir -p "~/.poetry/bin" && \ 
+    curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 && \
+    python3 -m pip install pex dephell[full] && \
+    dephell --version && \
+    pex --version
 RUN git clone "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/da-moon/upstream-gen.git" "/workspace/upstream-gen"
 WORKDIR /workspace/upstream-gen
-RUN mkdir -p dist && \
-    make init && \
-    make requirements.txt 
-RUN pex \
-    --requirement=requirements.txt \
-    --script=upstream-gen \
-    --sources-directory=./upstream_gen \
-    --output-file=./dist/upstream-gen.pex
-RUN echo "nobody:x:65534:65534:Nobody:/:" > /etc_passwd
+RUN make python-pex && \
+    dist/pex/upstream-gen version
 FROM python:alpine
-COPY --from=base /etc_passwd /etc/passwd
-COPY --from=base --chown=65534:0 /workspace/upstream-gen.pex /upstream-gen.pex
-USER nobody
-ENTRYPOINT ["/upstream-gen.pex","main:main"]
+COPY --from=base /workspace/upstream-gen/dist/pex/upstream-gen /upstream-gen
+ENTRYPOINT ["/upstream-gen"]
