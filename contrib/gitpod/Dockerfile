@@ -1,12 +1,15 @@
 FROM gitpod/workspace-full
 USER gitpod
 SHELL ["/bin/bash", "-c"]
-# installing nuitka for static compilation of python apps + some extra tools
+# installing nuitka/bazel for static compilation of python apps + some extra tools
 RUN export DEBIAN_FRONTEND=noninteractive; \
+    curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg && \
+    sudo mv bazel.gpg /etc/apt/trusted.gpg.d/ && \
     wget -O - http://nuitka.net/deb/archive.key.gpg | sudo apt-key add - && \
     echo "deb http://nuitka.net/deb/stable/$(lsb_release -c -s) $(lsb_release -c -s) main" | sudo tee /etc/apt/sources.list.d/nuitka.list && \ 
+    echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list && \
     sudo apt-get update && \ 
-    sudo apt-get -y install nuitka upx python-dev python3-dev
+    sudo apt-get -y install nuitka upx python-dev python3-dev bazel
 # installing pyoxidizer
 RUN /home/gitpod/.cargo/bin/cargo install --git https://github.com/indygreg/PyOxidizer.git --branch main pyoxidizer
 

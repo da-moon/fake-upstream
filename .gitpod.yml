@@ -1,3 +1,4 @@
+---
 # https://github.com/da-moon/container-images
 image:
   file: contrib/gitpod/Dockerfile
@@ -33,3 +34,4 @@ vscode:
     - wayou.vscode-todo-highlight@1.0.4:8IqxuxCVol2WnScJc5xVzg==
     - redhat.vscode-yaml@0.7.2:bHhi0sG8mPlN+HpfBDsjQw==
     - ms-python.python@2020.3.71113:Pe7clI4/hPXqxiJrRXl+kw==
+    - BazelBuild.vscode-bazel@0.4.0:CNqPe08EnThWfsQXBuinsQ==
