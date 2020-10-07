@@ -22,16 +22,16 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
 # installing updating pip and installing pip packages 
 # => [NOTE] do not upgrade pip since dephell is not compatible with latest version
 RUN export DEBIAN_FRONTEND=noninteractive; \
-    pip3 dephell[full] && \
+    pip3 install dephell[full] && \
     dephell --version
 RUN export DEBIAN_FRONTEND=noninteractive; \
-    pip3 pyinstaller && \
+    pip3 install pyinstaller && \
     pyinstaller -v
 RUN export DEBIAN_FRONTEND=noninteractive; \
-    pip3 cython && \
+    pip3 install cython && \
     cython --version
 RUN export DEBIAN_FRONTEND=noninteractive; \
-    pip3 pex && \
+    pip3 install pex && \
     pex --version
 #clean up
 RUN export DEBIAN_FRONTEND=noninteractive; \
