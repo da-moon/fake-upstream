@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from upstream_gen import __version__
-from ..util.log import *
-from ..util.cli import *
+from upstream_gen.util.log import *
+from upstream_gen.util.cli import *
 from flask import Flask, render_template
 from werkzeug.serving import run_simple
 try:
@@ -17,7 +17,6 @@ LOGGER = logging.getLogger(__name__)
 # use logger to print flask run messages
 cli = sys.modules['flask.cli']
 cli.show_server_banner = lambda *x: LOGGER.debug(x)
-
 
 def __server_cli_entrypoint__(args):
     """
