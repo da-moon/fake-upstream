@@ -5,6 +5,6 @@ def MakeCaseAgnostic(choices):
         for key, item in enumerate(choice.lower() for choice in choices):
             if choice.lower() == item:
                 return choices[key]
-        else:
-            return choice
+            
+        return choice
     return find_choice
