@@ -56,7 +56,7 @@
         "venv",
         "webassets"
     ],
-    "python.pythonPath": "/home/gitpod/.pyenv/versions/3.8.5/bin/python",
+    "python.pythonPath": "/home/gitpod/.pyenv/versions/3.8.6/bin/python",
     "python.formatting.provider": "autopep8",
     "python.linting.pylintEnabled": true,
     "python.analysis.disabled": [

@@ -3,7 +3,7 @@ DOCKER_ENV:=false
 DELAY:=
 # variables for server
 LOG_LEVEL:=TRACE
-UPSTREAM_PORT:=6000
+UPSTREAM_PORT:=5050
 UPSTREAM_IP:=0.0.0.0
 # only 'true' or 'false' values are accepted
 DEBUG:=true

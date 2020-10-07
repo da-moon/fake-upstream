@@ -16,7 +16,7 @@ import os
 import logging
 import sys
 from collections import OrderedDict
-import upstream.defaults.loadbalancer.loadbalancer as default_upstream
+import upstream.defaults.echo.echo as default_upstream
 
 LOGGER = logging.getLogger(__name__)
 # use logger to print flask run messages
@@ -75,7 +75,6 @@ def __server_cli_entrypoint__(args):
         for upstream, mod in upstreams.items():
             if hasattr(mod.app, 'swag'):
                 mod.app.swag.config['basePath'] = upstream
-            LOGGER.warn(upstream)
         server = DispatcherMiddleware(
             app,
             {name: mod.app for name, mod in upstreams.items()}
