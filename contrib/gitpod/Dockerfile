@@ -37,6 +37,5 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
 RUN export DEBIAN_FRONTEND=noninteractive; \
     sudo apt-get autoclean -y && \ 
     sudo apt-get clean && \
-    sudo rm -rf /var/lib/apt/lists/* && \
-    sudo rm -rf /etc/bash_completion.d/rustup*
+    sudo rm -rf /var/lib/apt/lists/* 
 USER gitpod
