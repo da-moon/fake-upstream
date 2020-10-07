@@ -7,9 +7,9 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
     echo "deb http://nuitka.net/deb/stable/$(lsb_release -c -s) $(lsb_release -c -s) main" | sudo tee /etc/apt/sources.list.d/nuitka.list && \ 
     sudo apt-get update && \ 
     sudo apt-get -y install nuitka upx python-dev python3-dev
-# uninstalling cargo since it takes too much space
-RUN yes | /home/gitpod/.cargo/bin/rustup self uninstall && \
-    sudo rm /home/gitpod/.bashrc.d/80-rust
+# installing pyoxidizer
+RUN cargo install --git https://github.com/indygreg/PyOxidizer.git --branch main pyoxidizer
+
 RUN export DEBIAN_FRONTEND=noninteractive; \
     echo 'export PATH="$PATH:/home/gitpod/.poetry/bin"' >> "/home/gitpod/.bashrc" && \
     echo 'alias poetry="python3 /home/gitpod/.poetry/bin/poetry"' >> "/home/gitpod/.bash_aliases" 

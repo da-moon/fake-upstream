@@ -27,6 +27,14 @@ kill:
 server: python-server
 	- $(call print_running_target)
 	- $(call print_completed_target)
+.PHONY:build
+.SILENT: build
+build:
+	- $(call print_running_target)
+	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-pex
+	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-pyoxidizer
+	- $(call print_completed_target)
+
 .PHONY:clean
 .SILENT: clean
 clean:

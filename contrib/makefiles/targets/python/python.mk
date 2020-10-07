@@ -60,7 +60,8 @@ endif
 .SILENT: python-clean
 python-clean:
 	- $(call print_running_target)
-	- $(eval command=find $(PWD) -type d -name '__pycache__' | xargs -I {} rm -rf {})
+	- $(eval command=$(RM) dist)
+	- $(eval command=${command} && find $(PWD) -type d -name '__pycache__' | xargs -I {} rm -rf {})
 	- $(eval command=${command} && find $(PWD) -type f -name '*.py.*' | xargs -I {} rm -f {})
 	- @$(MAKE) --no-print-directory -f $(THIS_FILE) shell cmd="${command}"
 	- $(call print_completed_target)
@@ -80,11 +81,31 @@ endif
 	- $(call print_completed_target)
 .PHONY:  python-pex
 .SILENT: python-pex
-python-pex: setup.py requirements.txt
+python-pex: python-clean
 	- $(call print_running_target)
-	- $(eval command=$(RM) dist)
-	- $(eval command=${command} && pex . -j `nproc` -v -e upstream_gen.__main__:main -o dist/$(PROJECT_NAME).pex --disable-cache)
-	- $(eval command=${command} && $(RM) setup.py)
-	- $(eval command=${command} && $(RM) requirements.txt)
+	- $(call print_running_target, making self-contained python executable with pex)
+	- $(eval name=$(@:python-%=%))
+	- $(eval entry_root=$(shell echo $(PROJECT_NAME) | sed 's/-/_/g'))
+	- $(eval command=pex)
+ifneq (${VERBOSE}, )
+ifeq (${VERBOSE} , true)
+	- $(eval command=${command} -v)
+endif
+endif
+	- $(eval command=${command} --disable-cache)
+	- $(eval command=${command} --compile)
+	- $(eval command=${command} --jobs `nproc`)
+	- $(eval command=${command} --entry-point $(entry_root).__main__:main)
+	- $(eval command=${command} --output-file dist/$(name)/$(PROJECT_NAME))
+	- $(eval command=${command} .)
 	- @$(MAKE) --no-print-directory -f $(THIS_FILE) shell cmd="${command}"
+	- $(call print_running_target, '$(name)' generated artifact stored at dist/$(name)/$(PROJECT_NAME))
+	- $(call print_completed_target)
+.PHONY:  python-pyoxidizer
+.SILENT: python-pyoxidizer
+python-pyoxidizer: 
+	- $(call print_running_target)
+	# - $(eval command=$(RM) dist)
+	# - $(eval command=${command} && $(RM) setup.py)
+	# - @$(MAKE) --no-print-directory -f $(THIS_FILE) shell cmd="${command}"
 	- $(call print_completed_target)
