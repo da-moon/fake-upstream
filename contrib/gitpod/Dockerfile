@@ -25,8 +25,10 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
     python3 "/home/gitpod/.poetry/bin/poetry" --version
 # installing updating pip and installing pip packages 
 RUN export DEBIAN_FRONTEND=noninteractive; \
-    pip3 install dephell[full] && \
-    dephell --version
+    pip3 install dephell[full] pyinstaller cython && \
+    dephell --version && \
+    pyinstaller -v && \
+    cython --version
 #clean up
 RUN export DEBIAN_FRONTEND=noninteractive; \
     sudo apt-get autoclean -y && \ 
