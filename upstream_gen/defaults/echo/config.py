@@ -1,5 +1,5 @@
 
-from upstream import __version__
+from upstream_gen import __version__
 
 
 SWAGGER_CONFIG = {

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-from upstream import __version__
-from upstream.util.log import *
-from upstream.util.cli import *
-# from upstream.server.server import Server
+from upstream_gen import __version__
+from upstream_gen.util.log import *
+from upstream_gen.util.cli import *
+# from upstream_gen.server.server import Server
 from flasgger import Swagger
 from flask import Flask, render_template
 from werkzeug.serving import run_simple
@@ -16,7 +16,7 @@ import os
 import logging
 import sys
 from collections import OrderedDict
-import upstream.defaults.echo.echo as default_upstream
+import upstream_gen.defaults.echo.echo as default_upstream
 
 LOGGER = logging.getLogger(__name__)
 # use logger to print flask run messages

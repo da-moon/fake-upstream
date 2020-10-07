@@ -28,7 +28,7 @@ ifeq (${SERVER_FILE_REDIRECT} , true)
 	- $(eval command=${command}$(MKDIR) logs && )
 endif
 endif
-	- $(eval command=${command}${POETRY} run cli)
+	- $(eval command=${command}${POETRY} run upstream-gen)
 ifneq (${LOG_LEVEL}, )
 	- $(eval command=${command} --log ${LOG_LEVEL})
 endif

@@ -12,7 +12,7 @@ from flask.views import MethodView
 
 from flasgger import Swagger
 from flasgger import SwaggerView
-from upstream.defaults.echo.config import SWAGGER_CONFIG
+from upstream_gen.defaults.echo.config import SWAGGER_CONFIG
 
 LOGGER = logging.getLogger(__name__)
 cli = sys.modules['flask.cli']
