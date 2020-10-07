@@ -13,6 +13,13 @@ logging.addLevelName(logging.DEBUG - 5, 'TRACE')
 addLoggingLevel('TRACE', logging.DEBUG - 5)
 
 
+def __version_cli_entrypoint__(args):
+    """
+    this just prints package version. can be used to test successful installation
+    """
+    print(f"{__version__} ")
+
+
 def main():
     log_levels = ['TRACE', 'DEBUG', 'INFO']
     parser = argparse.ArgumentParser(
@@ -30,6 +37,12 @@ def main():
         help='Choose a upstream subcommand ')
     # adding subcommand parsers
     server_parser(sub_parsers)
+    # adding version parser
+    version_parser = sub_parsers.add_parser(
+        'version',
+        description='returns package version',
+        help='version')
+    version_parser.set_defaults(func=__version_cli_entrypoint__)
     args = vars(parser.parse_args())
     if args:
         logLevel = args['logLevel']
@@ -45,10 +58,6 @@ def main():
 
     else:
         parser.print_usage()
-
-    LOGGER.debug(
-        f"main() - "
-        f"version={__version__} ")
 
 
 if __name__ == "__main__":
