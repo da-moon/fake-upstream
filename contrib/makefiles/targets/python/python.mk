@@ -78,6 +78,13 @@ ifneq ($(DELAY),)
 	- sleep $(DELAY)
 endif
 	- $(call print_completed_target)
-
-
-
+.PHONY:  python-pex
+.SILENT: python-pex
+python-pex: setup.py requirements.txt
+	- $(call print_running_target)
+	- $(eval command=$(RM) dist)
+	- $(eval command=${command} && pex . -j `nproc` -v -e upstream_gen.__main__:main -o dist/$(PROJECT_NAME).pex --disable-cache)
+	- $(eval command=${command} && $(RM) setup.py)
+	- $(eval command=${command} && $(RM) requirements.txt)
+	- @$(MAKE) --no-print-directory -f $(THIS_FILE) shell cmd="${command}"
+	- $(call print_completed_target)
