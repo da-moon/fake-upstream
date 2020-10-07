@@ -7,7 +7,7 @@ POETRY := PIP_USER=false python3 $(HOME)/.poetry/bin/poetry
 python-init:
 	- $(call print_running_target)
 	- $(eval command=${POETRY} run python3 -m pip install --upgrade pip)
-	- $(eval command=${command} && ${POETRY} update)
+	- $(eval command=${command} && ${POETRY} download)
 	- @$(MAKE) --no-print-directory -f $(THIS_FILE) shell cmd="${command}"
 	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-clean
 	- $(call print_completed_target)
