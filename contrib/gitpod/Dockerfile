@@ -1,7 +1,7 @@
 FROM gitpod/workspace-full
 USER gitpod
 SHELL ["/bin/bash", "-c"]
-ENV PIP_USER=false'
+ENV PIP_USER=false
 # installing nuitka for static compilation of python apps + some extra tools
 RUN export DEBIAN_FRONTEND=noninteractive; \
     wget -O - http://nuitka.net/deb/archive.key.gpg | sudo apt-key add - && \
