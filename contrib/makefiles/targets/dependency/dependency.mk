@@ -27,7 +27,7 @@ poetry.lock:
 setup.py:
 	- $(call print_running_target)
 	- $(RM) setup.py
-	- dephell deps convert --from=pyproject.toml --to poetry.lock
+	- dephell deps convert --from=pyproject.toml --to setup.py
 	- $(call print_completed_target)
 .PHONY:requirements.txt
 .SILENT:requirements.txt

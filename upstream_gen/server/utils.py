@@ -10,8 +10,8 @@ def load_upstreams_from_dir(upstreams_dir: str):
     """
     loads python upstream files
     """
-    if len(upstreams_dir) == 0
-    raise Exception("empty path was given")
+    if len(upstreams_dir) == 0:
+        raise Exception("empty path was given")
     LOGGER.trace(
         f"server/utils.py -> load_upstreams_from_dir({upstreams_dir}) : function called")
     upstream = upstreams_dir.replace("/", ".")
