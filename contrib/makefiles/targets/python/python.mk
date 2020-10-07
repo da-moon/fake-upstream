@@ -1,7 +1,7 @@
 
 THIS_FILE := $(lastword $(MAKEFILE_LIST))
 SELF_DIR := $(dir $(THIS_FILE))
-POETRY := python3 $(HOME)/.poetry/bin/poetry
+POETRY := PIP_USER=false python3 $(HOME)/.poetry/bin/poetry
 .PHONY:  python-init
 .SILENT: python-init
 python-init:
