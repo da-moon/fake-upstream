@@ -4,8 +4,9 @@ image:
   file: contrib/gitpod/Dockerfile
 tasks:
   - command: >
-      make init &&
-      ls ~/.pyenv/ver* | grep 3 | xargs -I {} sed -i -e 's/versions\/3\.[[:digit:]]\.[[:digit:]]/versions\/{}/g' .vscode/settings.json
+      make init
+
+#ls ~/.pyenv/ver* | grep 3 | xargs -I {} sed -i -e 's/versions\/3\.[[:digit:]]\.[[:digit:]]/versions\/{}/g' .vscode/settings.json
 ports:
   - port: 3000-10000
     onOpen: ignore
