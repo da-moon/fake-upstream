@@ -1,6 +1,7 @@
 FROM gitpod/workspace-full
 USER gitpod
 SHELL ["/bin/bash", "-c"]
+ENV PATH="$PATH:/home/gitpod/.local/bin:/home/gitpod/.poetry/bin:/home/gitpod/.cargo/bin/"
 # installing nuitka/bazel for static compilation of python apps + some extra tools
 RUN export DEBIAN_FRONTEND=noninteractive; \
     curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg && \
@@ -26,7 +27,6 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
         twine \
     && sudo rm -rf /tmp/*
 
-ENV PATH="$PATH:/home/gitpod/.local/bin:/home/gitpod/.poetry/bin"
 # installing poetry. poetry is a python dependancy management software
 RUN export DEBIAN_FRONTEND=noninteractive; \
     curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 && \
@@ -46,7 +46,7 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
     pip3 install pex && \
     pex --version
 # installing pyoxidizer
-RUN /home/gitpod/.cargo/bin/cargo install pyoxidizer && \
+RUN /home/gitpod/.cargo/bin/cargo install -j$(nproc) pyoxidizer && \
     pyoxidizer --version
 #clean up
 RUN export DEBIAN_FRONTEND=noninteractive; \
