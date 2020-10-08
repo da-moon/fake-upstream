@@ -21,6 +21,7 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
 ENV PATH="$PATH:/home/gitpod/.local/bin:/home/gitpod/.poetry/bin"
 # installing poetry. poetry is a python dependancy management software
 RUN export DEBIAN_FRONTEND=noninteractive; \
+    pyenv install 3.7.7 && \
     curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 && \
     python3 "/home/gitpod/.poetry/bin/poetry" --version
 # installing updating pip and installing pip packages 
