@@ -10,9 +10,6 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
     echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list && \
     sudo apt-get update && \ 
     sudo apt-get -y install nuitka upx python-dev python3-dev bazel
-# installing pyoxidizer
-RUN /home/gitpod/.cargo/bin/cargo install pyoxidizer && \
-    pyoxidizer --version
 
 RUN export DEBIAN_FRONTEND=noninteractive; \
     echo 'export PATH="$PATH:/home/gitpod/.poetry/bin"' >> "/home/gitpod/.bashrc" && \
@@ -49,6 +46,9 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
 RUN export DEBIAN_FRONTEND=noninteractive; \
     pip3 install pex && \
     pex --version
+# installing pyoxidizer
+RUN /home/gitpod/.cargo/bin/cargo install pyoxidizer && \
+    pyoxidizer --version
 #clean up
 RUN export DEBIAN_FRONTEND=noninteractive; \
     sudo apt-get autoclean -y && \ 
