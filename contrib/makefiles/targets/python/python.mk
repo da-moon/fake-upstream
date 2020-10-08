@@ -61,6 +61,7 @@ endif
 python-clean:
 	- $(call print_running_target)
 	- $(eval command=$(RM) dist)
+	- $(eval command=${command} && $(RM) build)
 	- $(eval command=${command} && find $(PWD) -type d -name '__pycache__' | xargs -I {} rm -rf {})
 	- $(eval command=${command} && find $(PWD) -type f -name '*.py.*' | xargs -I {} rm -f {})
 	- @$(MAKE) --no-print-directory -f $(THIS_FILE) shell cmd="${command}"
@@ -103,9 +104,8 @@ endif
 	- $(call print_completed_target)
 .PHONY:  python-pyoxidizer
 .SILENT: python-pyoxidizer
-python-pyoxidizer: 
+python-pyoxidizer: python-init
 	- $(call print_running_target)
-	# - $(eval command=$(RM) dist)
-	# - $(eval command=${command} && $(RM) setup.py)
-	# - @$(MAKE) --no-print-directory -f $(THIS_FILE) shell cmd="${command}"
+	- $(eval command=pyoxidizer run)
+	- @$(MAKE) --no-print-directory -f $(THIS_FILE) shell cmd="${command}"
 	- $(call print_completed_target)
