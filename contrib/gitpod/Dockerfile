@@ -11,7 +11,8 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
     sudo apt-get update && \ 
     sudo apt-get -y install nuitka upx python-dev python3-dev bazel
 # installing pyoxidizer
-RUN /home/gitpod/.cargo/bin/cargo install --git https://github.com/indygreg/PyOxidizer.git --branch main pyoxidizer
+RUN /home/gitpod/.cargo/bin/cargo install pyoxidizer && \
+    pyoxidizer --version
 
 RUN export DEBIAN_FRONTEND=noninteractive; \
     echo 'export PATH="$PATH:/home/gitpod/.poetry/bin"' >> "/home/gitpod/.bashrc" && \

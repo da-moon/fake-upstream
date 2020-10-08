@@ -21,6 +21,7 @@ def __version_cli_entrypoint__(args):
 
 
 def main():
+    # print(f"{__version__} ")
     log_levels = ['TRACE', 'DEBUG', 'INFO']
     parser = argparse.ArgumentParser(
         description='server/client utility for usage as a mock upstream')

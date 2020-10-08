@@ -97,7 +97,7 @@ def make_exe(dist):
     #     use_hash_seed=False,
     #     verbose=0,
     #     write_modules_directory_env=None,
-    #     run_eval=None,
+        run_eval="import upstream_gen.__main__; __main__.main()",
     #     run_module=None,
     #     run_noop=False,
     #     run_repl=True,
@@ -119,7 +119,7 @@ def make_exe(dist):
     # resources, and other options. The returned object represents the
     # standalone executable that will be built.
     exe = dist.to_python_executable(
-        name=".",
+        name="upstream-gen",
 
         # If no argument passed, the default `PythonPackagingPolicy` for the
         # distribution is used.
@@ -134,31 +134,86 @@ def make_exe(dist):
     # collected files inside Python wheels. `add_python_resources()` adds these
     # objects to the binary, with a load location as defined by the current
     # `resources_policy`.
-    #exe.add_python_resources(exe.pip_download(["pyflakes==2.2.0"]))
-
+    # exe.add_python_resources(exe.pip_download([
+        # "pbr==5.*,>=5.5.0",
+    # ]))
+        #    "apispec==3.*,>=3.3.2",
+        # "certifi==2020.*,>=2020.6.20",
+        # "chardet==3.*,>=3.0.4",
+        # "click==7.*,>=7.1.2",
+        # "docopt==0.*,>=0.6.2",
+        # "flasgger==0.*,>=0.9.5",
+        # "flask==1.*,>=1.1.2",
+        # "flask-restful==0.*,>=0.3.8",
+        # "gunicorn==20.*,>=20.0.4",
+        # "idna==2.*,>=2.10.0",
+        # "itsdangerous==1.*,>=1.1.0",
+        # "jinja2==2.*,>=2.11.2",
+        # "jsonschema==3.*,>=3.2.0",
+        # "markupsafe==1.*,>=1.1.1",
+        # "marshmallow==3.*,>=3.8.0",
+        # "mistune==0.*,>=0.8.4",
+        # "pbr==5.*,>=5.5.0",
+        # "pytest==5.*,>=5.2.0",
+        # "python-dateutil==2.*,>=2.8.1",
+        # "pytz==2020.*,>=2020.1.0",
+        # "pyyaml==5.*,>=5.3.1",
+        # "requests==2.*,>=2.24.0",
+        # "six==1.*,>=1.15.0",
+        # "urllib3==1.*,>=1.25.10",
+        # "werkzeug==1.*,>=1.0.1",
+    # exe.add_python_resources(exe.pip_download([
+        # "apispec>=3.3.2",
+        # "certifi>=2020.6.20",
+        # "chardet>=3.0.4",
+        # "click>=7.1.2",
+        # "docopt>=0.6.2",
+        # "flasgger>=0.9.5",
+        # "flask>=1.1.2",
+        # "flask-restful>=0.3.8",
+        # "gunicorn>=20.0.4",
+        # "idna>=2.10.0",
+        # "itsdangerous>=1.1.0",
+        # "jinja2>=2.11.2",
+        # "jsonschema>=3.2.0",
+        # "markupsafe>=1.1.1",
+        # "marshmallow>=3.8.0",
+        # "mistune>=0.8.4",
+        # "pbr>=5.5.0",
+        # "pytest>=5.2.0",
+        # "python-dateutil>=2.8.1",
+        # "pytz>=2020.1.0",
+        # "pyyaml>=5.3.1",
+        # "requests>=2.24.0",
+        # "six>=1.15.0",
+        # "urllib3>=1.25.10",
+        # "werkzeug>=1.0.1",
+    # ]))
     # Invoke `pip install` with our Python distribution to install a single package.
     # `pip_install()` returns objects representing installed files.
     # `add_python_resources()` adds these objects to the binary, with a load
     # location as defined by the current `resources_policy`.
-    #exe.add_python_resources(exe.pip_install(["appdirs"]))
+    # exe.add_python_resources(exe.pip_install(["appdirs"]))
 
     # Invoke `pip install` using a requirements file and add the collected resources
     # to our binary.
-    #exe.add_python_resources(exe.pip_install(["-r", "requirements.txt"]))
+    # exe.add_python_resources(exe.pip_install(["-r", "requirements.txt"]))
 
     
 
     # Read Python files from a local directory and add them to our embedded
     # context, taking just the resources belonging to the `foo` and `bar`
     # Python packages.
-    #exe.add_python_resources(exe.read_package_root(
-    #    path="/src/mypackage",
-    #    packages=["foo", "bar"],
-    #))
-
+    exe.add_python_resources(exe.read_package_root(
+       path="./",
+       packages=["upstream_gen"],
+    ))
+    # exe.setup_py_install(
+    #     package_path=CWD
+    # )
     # Discover Python files from a virtualenv and add them to our embedded
     # context.
-    #exe.add_python_resources(exe.read_virtualenv(path="/path/to/venv"))
+    exe.add_python_resources(exe.read_virtualenv(path="/home/gitpod/.cache/pypoetry/virtualenvs/upstream-gen-3TpeWomo-py3.8"))
 
     # Filter all resources collected so far through a filter of names
     # in a file.
