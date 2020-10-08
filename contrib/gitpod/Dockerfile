@@ -46,7 +46,7 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
     pip3 install pex && \
     pex --version
 # installing pyoxidizer
-RUN /home/gitpod/.cargo/bin/cargo install pyoxidizer && \
+RUN /home/gitpod/.cargo/bin/cargo install -j$(nproc) pyoxidizer && \
     pyoxidizer --version
 #clean up
 RUN export DEBIAN_FRONTEND=noninteractive; \
