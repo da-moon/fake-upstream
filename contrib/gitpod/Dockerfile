@@ -17,11 +17,22 @@ RUN /home/gitpod/.cargo/bin/cargo install pyoxidizer && \
 RUN export DEBIAN_FRONTEND=noninteractive; \
     echo 'export PATH="$PATH:/home/gitpod/.poetry/bin"' >> "/home/gitpod/.bashrc" && \
     echo 'alias poetry="python3 /home/gitpod/.poetry/bin/poetry"' >> "/home/gitpod/.bash_aliases" 
+# pyenv setup
+RUN export DEBIAN_FRONTEND=noninteractive; \
+    pyenv uninstall 3.8.6 && \
+    pyenv install 3.7.7 && \
+    pyenv global 3.7.7 2.7.18 && \
+    python2 -m pip install --upgrade pip && \
+    python3 -m pip install --upgrade pip && \
+    python3 -m pip install --upgrade \
+        setuptools wheel virtualenv pipenv pylint rope flake8 \
+        mypy autopep8 pep8 pylama pydocstyle bandit notebook \
+        twine \
+    && sudo rm -rf /tmp/*
 
 ENV PATH="$PATH:/home/gitpod/.local/bin:/home/gitpod/.poetry/bin"
 # installing poetry. poetry is a python dependancy management software
 RUN export DEBIAN_FRONTEND=noninteractive; \
-    pyenv install 3.7.7 && \
     curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 && \
     python3 "/home/gitpod/.poetry/bin/poetry" --version
 # installing updating pip and installing pip packages 
