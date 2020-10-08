@@ -2,6 +2,9 @@ FROM gitpod/workspace-full
 USER gitpod
 SHELL ["/bin/bash", "-c"]
 ENV PATH="$PATH:/home/gitpod/.local/bin:/home/gitpod/.poetry/bin:/home/gitpod/.cargo/bin/"
+# installing pyoxidizer
+RUN cargo install -j$(nproc) pyoxidizer && \
+    pyoxidizer --version
 # installing nuitka/bazel for static compilation of python apps + some extra tools
 RUN export DEBIAN_FRONTEND=noninteractive; \
     curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg && \
@@ -45,9 +48,6 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
 RUN export DEBIAN_FRONTEND=noninteractive; \
     pip3 install pex && \
     pex --version
-# installing pyoxidizer
-RUN /home/gitpod/.cargo/bin/cargo install -j$(nproc) pyoxidizer && \
-    pyoxidizer --version
 #clean up
 RUN export DEBIAN_FRONTEND=noninteractive; \
     sudo apt-get autoclean -y && \ 
