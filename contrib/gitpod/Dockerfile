@@ -16,7 +16,6 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
     echo 'alias poetry="python3 /home/gitpod/.poetry/bin/poetry"' >> "/home/gitpod/.bash_aliases" 
 # pyenv setup
 RUN export DEBIAN_FRONTEND=noninteractive; \
-    pyenv uninstall 3.8.6 && \
     pyenv install 3.7.7 && \
     pyenv global 3.7.7 2.7.18 && \
     python2 -m pip install --upgrade pip && \
