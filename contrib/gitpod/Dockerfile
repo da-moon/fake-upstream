@@ -46,7 +46,7 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
     jq -r '.assets[] | select(.name | contains("linux")).browser_download_url'  | \
     xargs -I {} wget -q --show-progress -O /tmp/github-release.bz2 {} && \
     bzip2 -d /tmp/github-release.bz2 && \
-    sudo mv /tmp/github-release.bz2 /usr/local/bin/github-release && \
+    sudo mv /tmp/github-release /usr/local/bin/github-release && \
     sudo chmod +x /usr/local/bin/github-release
 #clean up
 RUN export DEBIAN_FRONTEND=noninteractive; \
