@@ -32,7 +32,6 @@ server: python-server
 build:
 	- $(call print_running_target)
 	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-pex
-	- @$(MAKE) --no-print-directory -f $(THIS_FILE) python-pyoxidizer
 	- $(call print_completed_target)
 
 .PHONY:clean

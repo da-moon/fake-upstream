@@ -1,19 +1,12 @@
 FROM gitpod/workspace-full
 USER gitpod
 SHELL ["/bin/bash", "-c"]
-ENV PATH="$PATH:/home/gitpod/.local/bin:/home/gitpod/.poetry/bin:/home/gitpod/.cargo/bin/"
-# installing pyoxidizer
-RUN cargo install -j$(nproc) pyoxidizer && \
-    pyoxidizer --version
 # installing nuitka/bazel for static compilation of python apps + some extra tools
 RUN export DEBIAN_FRONTEND=noninteractive; \
-    curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg && \
-    sudo mv bazel.gpg /etc/apt/trusted.gpg.d/ && \
     wget -O - http://nuitka.net/deb/archive.key.gpg | sudo apt-key add - && \
     echo "deb http://nuitka.net/deb/stable/$(lsb_release -c -s) $(lsb_release -c -s) main" | sudo tee /etc/apt/sources.list.d/nuitka.list && \ 
-    echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list && \
     sudo apt-get update && \ 
-    sudo apt-get -y install nuitka upx python-dev python3-dev bazel
+    sudo apt-get -y install nuitka upx python-dev python3-dev 
 
 RUN export DEBIAN_FRONTEND=noninteractive; \
     echo 'export PATH="$PATH:/home/gitpod/.poetry/bin"' >> "/home/gitpod/.bashrc" && \
@@ -25,9 +18,9 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
     python2 -m pip install --upgrade pip && \
     python3 -m pip install --upgrade pip && \
     python3 -m pip install --upgrade \
-        setuptools wheel virtualenv pipenv pylint rope flake8 \
-        mypy autopep8 pep8 pylama pydocstyle bandit notebook \
-        twine \
+    setuptools wheel virtualenv pipenv pylint rope flake8 \
+    mypy autopep8 pep8 pylama pydocstyle bandit notebook \
+    twine \
     && sudo rm -rf /tmp/*
 
 # installing poetry. poetry is a python dependancy management software
