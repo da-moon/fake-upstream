@@ -6,7 +6,7 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
     wget -O - http://nuitka.net/deb/archive.key.gpg | sudo apt-key add - && \
     echo "deb http://nuitka.net/deb/stable/$(lsb_release -c -s) $(lsb_release -c -s) main" | sudo tee /etc/apt/sources.list.d/nuitka.list && \ 
     sudo apt-get update && \ 
-    sudo apt-get -y install nuitka upx python-dev python3-dev 
+    sudo apt-get -y install nuitka upx python-dev python3-dev bzip2
 
 RUN export DEBIAN_FRONTEND=noninteractive; \
     echo 'export PATH="$PATH:/home/gitpod/.poetry/bin"' >> "/home/gitpod/.bashrc" && \
@@ -41,6 +41,13 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
 RUN export DEBIAN_FRONTEND=noninteractive; \
     pip3 install pex && \
     pex --version
+RUN export DEBIAN_FRONTEND=noninteractive; \
+    curl -sL https://api.github.com/repos/github-release/github-release/releases/latest | \
+    jq -r '.assets[] | select(.name | contains("linux")).browser_download_url'  | \
+    xargs -I {} wget -q --show-progress -O /tmp/github-release.bz2 {} && \
+    bzip2 -d /tmp/github-release.bz2 && \
+    sudo mv /tmp/github-release.bz2 /usr/local/bin/github-release && \
+    sudo chmod +x /usr/local/bin/github-release
 #clean up
 RUN export DEBIAN_FRONTEND=noninteractive; \
     sudo apt-get autoclean -y && \ 
