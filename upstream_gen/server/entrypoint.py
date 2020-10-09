@@ -18,6 +18,7 @@ LOGGER = logging.getLogger(__name__)
 cli = sys.modules['flask.cli']
 cli.show_server_banner = lambda *x: LOGGER.debug(x)
 
+
 def __server_cli_entrypoint__(args):
     """
     this it the main function that uses starts the origin server
@@ -28,7 +29,8 @@ def __server_cli_entrypoint__(args):
         port = int(port)
     except ValueError:
         LOOGER.error(
-            "parsed 'port' value ('{}') cannot be converted to int.".format(port))
+            "parsed 'port' value ('{}') cannot be converted to int.".format(
+                port))
         sys.exit(-1)
     host = args.get('host_flag', "0.0.0.0")
     reloader = args.get('reloader_flag', False)
@@ -36,7 +38,8 @@ def __server_cli_entrypoint__(args):
         reloader = bool(reloader)
     except ValueError:
         LOOGER.error(
-            "parsed 'reloader' value ('{}') cannot be converted to bool.".format(reloader))
+            "parsed 'reloader' value ('{}') cannot be converted to bool.".
+            format(reloader))
         sys.exit(-1)
 
     debug = args.get('debug_flag', False)
@@ -44,14 +47,15 @@ def __server_cli_entrypoint__(args):
         debug = bool(debug)
     except ValueError:
         LOOGER.error(
-            "parsed 'debug' value ('{}') cannot be converted to bool.".format(debug))
+            "parsed 'debug' value ('{}') cannot be converted to bool.".format(
+                debug))
         sys.exit(-1)
-    LOGGER.debug(
-        f"__server_cli_entrypoint__() - parsed arguments : "
-        f"host={host} "
-        f"port={port} "
-        f"reloader={reloader} "
-        f"debug={debug} ")
+
+    LOGGER.debug(f"__server_cli_entrypoint__() - parsed arguments : "
+                 f"host={host} "
+                 f"port={port} "
+                 f"reloader={reloader} "
+                 f"debug={debug} ")
     try:
 
         targets = [default_upstream]
@@ -71,9 +75,8 @@ def __server_cli_entrypoint__(args):
             if hasattr(mod.app, 'swag'):
                 mod.app.swag.config['basePath'] = upstream
         server = DispatcherMiddleware(
-            app,
-            {name: mod.app for name, mod in upstreams.items()}
-        )
+            app, {name: mod.app
+                  for name, mod in upstreams.items()})
 
         run_simple(
             host,
@@ -135,5 +138,6 @@ def configure_parser(sub_parsers):
         dest='debug_flag',
         help='Turns on debug mode.(default: False)',
     )
+
     # setting function to execute once 'server' subcommand is called
     server_parser.set_defaults(func=__server_cli_entrypoint__)

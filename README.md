@@ -9,12 +9,10 @@
   <img src="https://img.shields.io/github/last-commit/da-moon/fake-upstream/master" alt="GitHub last commit">
 </p>
 
-A simple flask based upstream server and client utility, used for mocking servers behind load-balancer and probing reverse proxy configuration.
+A simple flask based upstream server utility, used for mocking servers behind load-balancer and probing reverse proxy configuration.
 
-## TODO
+at this point, it only runs an echo server. Planning on adding more upstream servers for probing.
 
-- [ ] Load individual module
-- [ ] Load module directory
 
 ## references
 
