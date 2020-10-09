@@ -5,7 +5,7 @@ description = "simple web server to be used as upstream for experimenting with l
 authors = ["da-moon <damoon.azarpazhooh@ryerson.ca>"]
 license = "MIT"
 [tool.poetry.dependencies]
-python = "^3.7.7"
+python = "^3.7"
 apispec = "^3.3.2"
 certifi = "^2020.6.20"
 chardet = "^3.0.4"
